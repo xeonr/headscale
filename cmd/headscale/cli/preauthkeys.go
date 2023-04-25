@@ -11,6 +11,7 @@ import (
 	"github.com/pterm/pterm"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
+	protohelp "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -42,6 +43,8 @@ func init() {
 		StringP("expiration", "e", DefaultPreAuthKeyExpiry, "Human-readable expiration of the key (e.g. 30m, 24h)")
 	createPreAuthKeyCmd.Flags().
 		StringSlice("tags", []string{}, "Tags to automatically assign to node")
+	createPreAuthKeyCmd.PersistentFlags().
+		String("requiredHostname", "", "Required hostname for this token")
 }
 
 var preauthkeysCmd = &cobra.Command{
@@ -99,6 +102,7 @@ var listPreAuthKeys = &cobra.Command{
 				"Expiration",
 				"Created",
 				"Tags",
+				"RequiredHostname",
 			},
 		}
 		for _, key := range response.PreAuthKeys {
@@ -131,6 +135,7 @@ var listPreAuthKeys = &cobra.Command{
 				expiration,
 				key.GetCreatedAt().AsTime().Format("2006-01-02 15:04:05"),
 				aclTags,
+				*key.RequiredHostname,
 			})
 
 		}
@@ -164,6 +169,7 @@ var createPreAuthKeyCmd = &cobra.Command{
 		reusable, _ := cmd.Flags().GetBool("reusable")
 		ephemeral, _ := cmd.Flags().GetBool("ephemeral")
 		tags, _ := cmd.Flags().GetStringSlice("tags")
+		requiredHostname, _ := cmd.Flags().GetString("requiredHostname")
 
 		log.Trace().
 			Bool("reusable", reusable).
@@ -172,10 +178,11 @@ var createPreAuthKeyCmd = &cobra.Command{
 			Msg("Preparing to create preauthkey")
 
 		request := &v1.CreatePreAuthKeyRequest{
-			User:      user,
-			Reusable:  reusable,
-			Ephemeral: ephemeral,
-			AclTags:   tags,
+			User:             user,
+			Reusable:         reusable,
+			Ephemeral:        ephemeral,
+			AclTags:          tags,
+			RequiredHostname: protohelp.String(requiredHostname),
 		}
 
 		durationStr, _ := cmd.Flags().GetString("expiration")

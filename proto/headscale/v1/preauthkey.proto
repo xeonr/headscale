@@ -14,6 +14,7 @@ message PreAuthKey {
     google.protobuf.Timestamp expiration = 7;
     google.protobuf.Timestamp created_at = 8;
     repeated string           acl_tags   = 9;
+    optional string    required_hostname = 10;
 }
 
 message CreatePreAuthKeyRequest {
@@ -22,6 +23,7 @@ message CreatePreAuthKeyRequest {
     bool                      ephemeral  = 3;
     google.protobuf.Timestamp expiration = 4;
     repeated string           acl_tags   = 5;
+    optional string    required_hostname = 6;
 }
 
 message CreatePreAuthKeyResponse {
@@ -38,6 +40,7 @@ message ExpirePreAuthKeyResponse {
 
 message ListPreAuthKeysRequest {
     string user = 1;
+    optional string hostname = 2;
 }
 
 message ListPreAuthKeysResponse {

@@ -466,6 +466,12 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "hostname",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -823,6 +829,7 @@
         "details": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
         }
@@ -890,6 +897,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "requiredHostname": {
+          "type": "string"
         }
       }
     },
@@ -1007,6 +1017,7 @@
         "routes": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/v1Route"
           }
         }
@@ -1018,6 +1029,7 @@
         "routes": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/v1Route"
           }
         }
@@ -1037,6 +1049,7 @@
         "apiKeys": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/v1ApiKey"
           }
         }
@@ -1048,6 +1061,7 @@
         "machines": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/v1Machine"
           }
         }
@@ -1059,6 +1073,7 @@
         "preAuthKeys": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/v1PreAuthKey"
           }
         }
@@ -1070,6 +1085,7 @@
         "users": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/v1User"
           }
         }
@@ -1193,6 +1209,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "requiredHostname": {
+          "type": "string"
         }
       }
     },

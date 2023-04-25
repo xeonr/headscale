@@ -31,7 +31,7 @@ func (s *Suite) TestDestroyUserErrors(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	err = app.DestroyUser("test")
@@ -44,7 +44,7 @@ func (s *Suite) TestDestroyUserErrors(c *check.C) {
 	user, err = app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err = app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err = app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	machine := Machine{
@@ -108,6 +108,7 @@ func (s *Suite) TestGetMapResponseUserProfiles(c *check.C) {
 		false,
 		nil,
 		nil,
+		nil,
 	)
 	c.Assert(err, check.IsNil)
 
@@ -115,6 +116,7 @@ func (s *Suite) TestGetMapResponseUserProfiles(c *check.C) {
 		userShared2.Name,
 		false,
 		false,
+		nil,
 		nil,
 		nil,
 	)
@@ -126,6 +128,7 @@ func (s *Suite) TestGetMapResponseUserProfiles(c *check.C) {
 		false,
 		nil,
 		nil,
+		nil,
 	)
 	c.Assert(err, check.IsNil)
 
@@ -133,6 +136,7 @@ func (s *Suite) TestGetMapResponseUserProfiles(c *check.C) {
 		userShared1.Name,
 		false,
 		false,
+		nil,
 		nil,
 		nil,
 	)
@@ -384,7 +388,7 @@ func (s *Suite) TestSetMachineUser(c *check.C) {
 	newUser, err := app.CreateUser("new")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(oldUser.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(oldUser.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	machine := Machine{

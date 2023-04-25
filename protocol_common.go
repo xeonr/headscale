@@ -311,7 +311,7 @@ func (h *Headscale) handleAuthKeyCommon(
 		Msgf("Processing auth key for %s", registerRequest.Hostinfo.Hostname)
 	resp := tailcfg.RegisterResponse{}
 
-	pak, err := h.checkKeyValidity(registerRequest.Auth.AuthKey)
+	pak, err := h.checkKeyValidity(registerRequest.Auth.AuthKey, &registerRequest.Hostinfo.Hostname)
 	if err != nil {
 		log.Error().
 			Caller().

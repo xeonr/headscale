@@ -19,7 +19,7 @@ func (s *Suite) TestGetMachine(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "testmachine")
@@ -45,7 +45,7 @@ func (s *Suite) TestGetMachineByID(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachineByID(0)
@@ -71,7 +71,7 @@ func (s *Suite) TestGetMachineByNodeKey(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachineByID(0)
@@ -100,7 +100,7 @@ func (s *Suite) TestGetMachineByAnyNodeKey(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachineByID(0)
@@ -175,7 +175,7 @@ func (s *Suite) TestListPeers(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachineByID(0)
@@ -218,7 +218,7 @@ func (s *Suite) TestGetACLFilteredPeers(c *check.C) {
 	for _, name := range []string{"test", "admin"} {
 		user, err := app.CreateUser(name)
 		c.Assert(err, check.IsNil)
-		pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+		pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 		c.Assert(err, check.IsNil)
 		stor = append(stor, base{user, pak})
 	}
@@ -298,7 +298,7 @@ func (s *Suite) TestExpireMachine(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "testmachine")
@@ -354,7 +354,7 @@ func (s *Suite) TestGenerateGivenName(c *check.C) {
 	user1, err := app.CreateUser("user-1")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user1.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user1.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("user-1", "testmachine")
@@ -398,7 +398,7 @@ func (s *Suite) TestSetTags(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "testmachine")
@@ -1223,7 +1223,7 @@ func (s *Suite) TestAutoApproveRoutes(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	nodeKey := key.NewNode()

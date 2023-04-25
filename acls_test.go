@@ -80,7 +80,7 @@ func (s *Suite) TestSshRules(c *check.C) {
 	user, err := app.CreateUser("user1")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("user1", "testmachine")
@@ -190,7 +190,7 @@ func (s *Suite) TestValidExpandTagOwnersInSources(c *check.C) {
 	user, err := app.CreateUser("user1")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("user1", "testmachine")
@@ -240,7 +240,7 @@ func (s *Suite) TestValidExpandTagOwnersInDestinations(c *check.C) {
 	user, err := app.CreateUser("user1")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("user1", "testmachine")
@@ -290,7 +290,7 @@ func (s *Suite) TestInvalidTagValidUser(c *check.C) {
 	user, err := app.CreateUser("user1")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("user1", "testmachine")
@@ -339,7 +339,7 @@ func (s *Suite) TestValidTagInvalidUser(c *check.C) {
 	user, err := app.CreateUser("user1")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("user1", "webserver")
@@ -471,7 +471,7 @@ func (s *Suite) TestPortUser(c *check.C) {
 	user, err := app.CreateUser("testuser")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("testuser", "testmachine")
@@ -516,7 +516,7 @@ func (s *Suite) TestPortGroup(c *check.C) {
 	user, err := app.CreateUser("testuser")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("testuser", "testmachine")

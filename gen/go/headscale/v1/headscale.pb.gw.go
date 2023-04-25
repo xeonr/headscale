@@ -766,7 +766,7 @@ func local_request_HeadscaleService_ListMachines_0(ctx context.Context, marshale
 }
 
 var (
-	filter_HeadscaleService_MoveMachine_0 = &utilities.DoubleArray{Encoding: map[string]int{"machine_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_HeadscaleService_MoveMachine_0 = &utilities.DoubleArray{Encoding: map[string]int{"machine_id": 0, "machineId": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
 func request_HeadscaleService_MoveMachine_0(ctx context.Context, marshaler runtime.Marshaler, client HeadscaleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -1784,7 +1784,7 @@ func RegisterHeadscaleServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 // RegisterHeadscaleServiceHandlerFromEndpoint is same as RegisterHeadscaleServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
 func RegisterHeadscaleServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.Dial(endpoint, opts...)
+	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
 	}

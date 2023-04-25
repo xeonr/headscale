@@ -24,14 +24,15 @@ const (
 
 // PreAuthKey describes a pre-authorization key usable in a particular user.
 type PreAuthKey struct {
-	ID        uint64 `gorm:"primary_key"`
-	Key       string
-	UserID    uint
-	User      User
-	Reusable  bool
-	Ephemeral bool `gorm:"default:false"`
-	Used      bool `gorm:"default:false"`
-	ACLTags   []PreAuthKeyACLTag
+	ID               uint64 `gorm:"primary_key"`
+	Key              string
+	UserID           uint
+	User             User
+	Reusable         bool
+	Ephemeral        bool `gorm:"default:false"`
+	Used             bool `gorm:"default:false"`
+	ACLTags          []PreAuthKeyACLTag
+	RequiredHostname *string
 
 	CreatedAt  *time.Time
 	Expiration *time.Time
@@ -51,6 +52,7 @@ func (h *Headscale) CreatePreAuthKey(
 	ephemeral bool,
 	expiration *time.Time,
 	aclTags []string,
+	requiredHostname *string,
 ) (*PreAuthKey, error) {
 	user, err := h.GetUser(userName)
 	if err != nil {
@@ -70,13 +72,14 @@ func (h *Headscale) CreatePreAuthKey(
 	}
 
 	key := PreAuthKey{
-		Key:        kstr,
-		UserID:     user.ID,
-		User:       *user,
-		Reusable:   reusable,
-		Ephemeral:  ephemeral,
-		CreatedAt:  &now,
-		Expiration: expiration,
+		Key:              kstr,
+		UserID:           user.ID,
+		User:             *user,
+		Reusable:         reusable,
+		Ephemeral:        ephemeral,
+		CreatedAt:        &now,
+		Expiration:       expiration,
+		RequiredHostname: requiredHostname,
 	}
 
 	err = h.db.Transaction(func(db *gorm.DB) error {
@@ -111,14 +114,19 @@ func (h *Headscale) CreatePreAuthKey(
 }
 
 // ListPreAuthKeys returns the list of PreAuthKeys for a user.
-func (h *Headscale) ListPreAuthKeys(userName string) ([]PreAuthKey, error) {
+func (h *Headscale) ListPreAuthKeys(userName string, hostname *string) ([]PreAuthKey, error) {
 	user, err := h.GetUser(userName)
 	if err != nil {
 		return nil, err
 	}
 
+	filter := &PreAuthKey{UserID: user.ID}
+	if hostname != nil {
+		filter.RequiredHostname = hostname
+	}
+
 	keys := []PreAuthKey{}
-	if err := h.db.Preload("User").Preload("ACLTags").Where(&PreAuthKey{UserID: user.ID}).Find(&keys).Error; err != nil {
+	if err := h.db.Preload("User").Preload("ACLTags").Where(filter).Find(&keys).Error; err != nil {
 		return nil, err
 	}
 
@@ -127,7 +135,7 @@ func (h *Headscale) ListPreAuthKeys(userName string) ([]PreAuthKey, error) {
 
 // GetPreAuthKey returns a PreAuthKey for a given key.
 func (h *Headscale) GetPreAuthKey(user string, key string) (*PreAuthKey, error) {
-	pak, err := h.checkKeyValidity(key)
+	pak, err := h.checkKeyValidity(key, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +184,7 @@ func (h *Headscale) UsePreAuthKey(k *PreAuthKey) error {
 
 // checkKeyValidity does the heavy lifting for validation of the PreAuthKey coming from a node
 // If returns no error and a PreAuthKey, it can be used.
-func (h *Headscale) checkKeyValidity(k string) (*PreAuthKey, error) {
+func (h *Headscale) checkKeyValidity(k string, hostname *string) (*PreAuthKey, error) {
 	pak := PreAuthKey{}
 	if result := h.db.Preload("User").Preload("ACLTags").First(&pak, "key = ?", k); errors.Is(
 		result.Error,
@@ -202,6 +210,10 @@ func (h *Headscale) checkKeyValidity(k string) (*PreAuthKey, error) {
 		return nil, ErrSingleUseAuthKeyHasBeenUsed
 	}
 
+	if pak.RequiredHostname != nil && hostname != nil && *pak.RequiredHostname != *hostname {
+		return nil, ErrPreAuthKeyNotFound
+	}
+
 	return &pak, nil
 }
 
@@ -224,6 +236,10 @@ func (key *PreAuthKey) toProto() *v1.PreAuthKey {
 		Reusable:  key.Reusable,
 		Used:      key.Used,
 		AclTags:   make([]string, len(key.ACLTags)),
+	}
+
+	if key.RequiredHostname != nil {
+		protoKey.RequiredHostname = key.RequiredHostname
 	}
 
 	if key.Expiration != nil {

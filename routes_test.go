@@ -13,7 +13,7 @@ func (s *Suite) TestGetRoutes(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "test_get_route_machine")
@@ -57,7 +57,7 @@ func (s *Suite) TestGetEnableRoutes(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "test_enable_route_machine")
@@ -132,7 +132,7 @@ func (s *Suite) TestIsUniquePrefix(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "test_enable_route_machine")
@@ -216,7 +216,7 @@ func (s *Suite) TestSubnetFailover(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "test_enable_route_machine")
@@ -361,7 +361,7 @@ func (s *Suite) TestAllowedIPRoutes(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "test_enable_route_machine")
@@ -463,7 +463,7 @@ func (s *Suite) TestDeleteRoutes(c *check.C) {
 	user, err := app.CreateUser("test")
 	c.Assert(err, check.IsNil)
 
-	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil)
+	pak, err := app.CreatePreAuthKey(user.Name, false, false, nil, nil, nil)
 	c.Assert(err, check.IsNil)
 
 	_, err = app.GetMachine("test", "test_enable_route_machine")

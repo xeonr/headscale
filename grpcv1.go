@@ -122,6 +122,7 @@ func (api headscaleV1APIServer) CreatePreAuthKey(
 		request.GetEphemeral(),
 		&expiration,
 		request.AclTags,
+		request.RequiredHostname,
 	)
 	if err != nil {
 		return nil, err
@@ -151,7 +152,7 @@ func (api headscaleV1APIServer) ListPreAuthKeys(
 	ctx context.Context,
 	request *v1.ListPreAuthKeysRequest,
 ) (*v1.ListPreAuthKeysResponse, error) {
-	preAuthKeys, err := api.h.ListPreAuthKeys(request.GetUser())
+	preAuthKeys, err := api.h.ListPreAuthKeys(request.GetUser(), request.Hostname)
 	if err != nil {
 		return nil, err
 	}

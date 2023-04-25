@@ -78,7 +78,7 @@ func (h *Headscale) DestroyUser(name string) error {
 		return ErrUserStillHasNodes
 	}
 
-	keys, err := h.ListPreAuthKeys(name)
+	keys, err := h.ListPreAuthKeys(name, nil)
 	if err != nil {
 		return err
 	}
